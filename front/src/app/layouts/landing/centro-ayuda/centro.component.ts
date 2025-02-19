@@ -23,39 +23,24 @@ import {
     NavigationService,
 } from '../../../core/navigation/navigation.service';
 import { FuseMediaWatcherService } from '../../../../@fuse/services/media-watcher';
-import {
-    DesaparecidoCardComponent,
-    DesaparecidoInfo,
-} from './components/card.component';
 
 @Component({
-    selector: 'app-home',
+    selector: 'app-centro-ayuda',
     standalone: true,
     imports: [
         CommonModule,
-        FuseLoadingBarComponent,
-        FuseLoadingBarComponent,
         NgIf,
         FuseVerticalNavigationComponent,
         FuseHorizontalNavigationComponent,
         MatButtonModule,
         MatIconModule,
-        LanguagesComponent,
-        FuseFullscreenComponent,
-        SearchComponent,
-        ShortcutsComponent,
-        MessagesComponent,
-        NotificationsComponent,
-        UserComponent,
         RouterOutlet,
-        QuickChatComponent,
-        DesaparecidoCardComponent,
     ],
 
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
+    templateUrl: './centro.component.html',
+    styleUrls: ['./centro.component.scss'],
 })
-export class HomeComponent {
+export class CentroAyudaComponent {
     isScreenSmall: boolean;
     navigation: Navigation;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -84,18 +69,4 @@ export class HomeComponent {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
-
-    datosDesaparecido: DesaparecidoInfo = {
-        estado: 'DESAPARECIDO',
-        nombre: 'Nathaniel L. Heady',
-        codigo: '(430)35',
-        alias: 'Ailuru',
-        altura: 'W3 cm',
-        peso: '77 kg',
-        cronelib: 'Strado',
-        ultimaUbicacion: 'Ultime Utile edefa',
-        contacto: '+59170745024',
-        descripcion:
-            "Nathaniel L. Heady fue visto por última vez en 'Ultime Utile edefa'. Es un hombre de complexión media, con cabello corto y ojos oscuros. Se le conoce por su alias 'Ailuru'. Vestía una chaqueta oscura y jeans al momento de su desaparición. Se solicita cualquier información sobre su paradero. Si tienes datos, comunícate al contacto proporcionado.",
-    };
 }

@@ -1,28 +1,161 @@
-import { CommonModule, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import { FuseLoadingBarComponent } from '../../../@fuse/components/loading-bar';
-import { FuseHorizontalNavigationComponent, FuseVerticalNavigationComponent } from '../../../@fuse/components/navigation';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { LanguagesComponent } from '../../layout/common/languages/languages.component';
-import { FuseFullscreenComponent } from '../../../@fuse/components/fullscreen';
-import { SearchComponent } from '../../layout/common/search/search.component';
-import { ShortcutsComponent } from '../../layout/common/shortcuts/shortcuts.component';
-import { MessagesComponent } from '../../layout/common/messages/messages.component';
-import { NotificationsComponent } from '../../layout/common/notifications/notifications.component';
-import { UserComponent } from '../../layout/common/user/user.component';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import {
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChanges,
+} from '@angular/core';
+import {
+    FuseNavigationItem,
+    FuseNavigationService,
+} from '../../../@fuse/components/navigation';
+
 import { RouterOutlet } from '@angular/router';
-import { QuickChatComponent } from '../../layout/common/quick-chat/quick-chat.component';
+import { FuseHorizontalNavigationBasicItemComponent } from '../../../@fuse/components/navigation/horizontal/components/basic/basic.component';
+import { FuseHorizontalNavigationBranchItemComponent } from '../../../@fuse/components/navigation/horizontal/components/branch/branch.component';
+import { FuseHorizontalNavigationSpacerItemComponent } from '../../../@fuse/components/navigation/horizontal/components/spacer/spacer.component';
+import { ReplaySubject, Subject } from 'rxjs';
+import { FuseUtilsService } from '../../../@fuse/services/utils';
+import { fuseAnimations } from '../../../@fuse/animations';
 
 @Component({
     selector: 'app-landing',
-    template: `<router-outlet></router-outlet>`,
-    // templateUrl: './layout.component.html',
+    templateUrl: 'landing.component.html',
+    standalone: true,
+    animations: fuseAnimations,
 
-    // imports: [CommonModule,FuseLoadingBarComponent,FuseLoadingBarComponent, NgIf, FuseVerticalNavigationComponent, FuseHorizontalNavigationComponent, MatButtonModule, MatIconModule, LanguagesComponent, FuseFullscreenComponent, SearchComponent, ShortcutsComponent, MessagesComponent, NotificationsComponent, UserComponent, RouterOutlet, QuickChatComponent],
-    
-    
-    
-
+    imports: [
+        RouterOutlet,
+        NgFor,
+        NgIf,
+        FuseHorizontalNavigationBasicItemComponent,
+        FuseHorizontalNavigationBranchItemComponent,
+        FuseHorizontalNavigationSpacerItemComponent,
+    ],
 })
-export class LandingComponent {}
+export class LandingComponent implements OnChanges, OnInit, OnDestroy {
+    @Input() name: string = this._fuseUtilsService.randomId();
+    @Input() navigation: FuseNavigationItem[];
+    @Input() navigation2: FuseNavigationItem[];
+    @Input() reportar: FuseNavigationItem[];
+
+    onRefreshed: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+
+    /**
+     * Constructor
+     */
+    constructor(
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _fuseNavigationService: FuseNavigationService,
+        private _fuseUtilsService: FuseUtilsService
+    ) {}
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Lifecycle hooks
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * On changes
+     *
+     * @param changes
+     */
+    ngOnChanges(changes: SimpleChanges): void {
+        // Navigation
+        if ('navigation' in changes) {
+            // Mark for check
+            this._changeDetectorRef.markForCheck();
+        }
+    }
+
+    /**
+     * On init
+     */
+    ngOnInit(): void {
+        // Make sure the name input is not an empty string
+        if (this.name === '') {
+            this.name = this._fuseUtilsService.randomId();
+        }
+        this.navigation = [
+            {
+                id: 'home',
+                title: 'Inicio',
+                type: 'basic',
+                icon: 'home',
+                link: '/',
+            },
+            {
+                id: 'centro',
+                title: 'Centro de ayuda',
+                type: 'basic',
+                icon: 'person',
+                link: '/centro-ayuda',
+            },
+        ];
+        this.reportar = [
+            {
+                id: 'reportar',
+                title: 'Reportar',
+                type: 'basic',
+                icon: 'report',
+                link: '/reportar',
+            },
+        ];
+        this.navigation2 = [
+            {
+                id: 'ingresar',
+                title: 'Ingresar',
+                type: 'basic',
+                link: '/login',
+            },
+
+            {
+                id: 'Registrarse',
+                title: 'Registrarse',
+                type: 'basic',
+                link: '/Register',
+            },
+        ];
+        this._fuseNavigationService.registerComponent(this.name, this);
+    }
+
+    /**
+     * On destroy
+     */
+    ngOnDestroy(): void {
+        // Deregister the navigation component from the registry
+        this._fuseNavigationService.deregisterComponent(this.name);
+
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Refresh the component to apply the changes
+     */
+    refresh(): void {
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
+
+        // Execute the observable
+        this.onRefreshed.next(true);
+    }
+
+    /**
+     * Track by function for ngFor loops
+     *
+     * @param index
+     * @param item
+     */
+    trackByFn(index: number, item: any): any {
+        return item.id || index;
+    }
+}

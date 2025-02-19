@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { LandingComponent } from './landing.component';
 import { LandingRoutingModule } from './landing-routing.module';
 import { HomeComponent } from './home/home.component';
+import { CentroAyudaComponent } from './centro-ayuda/centro.component';
 
 @NgModule({
-    declarations: [LandingComponent],
-    imports: [CommonModule, LandingRoutingModule, HomeComponent],
+    imports: [CommonModule, LandingRoutingModule],
 })
 export class LandingModule {}

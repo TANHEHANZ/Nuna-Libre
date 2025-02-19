@@ -1,0 +1,98 @@
+<!-- <div
+            class="fuse-horizontal-navigation-wrapper flex gap-2 h-[10vh] justify-center items-center w-screen"
+        >
+            <p *ngIf="!navigation?.length">No hay elementos de navegación</p>
+
+            <ng-container
+                *ngFor="let item of navigation; trackBy: trackByFn"
+                class="flex"
+            >
+                <ng-container
+                    *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden"
+                >
+                    <ng-container *ngIf="item.type === 'basic'">
+                        <fuse-horizontal-navigation-basic-item
+                            class="flex"
+                            [item]="item"
+                            [name]="name"
+                        ></fuse-horizontal-navigation-basic-item>
+                    </ng-container>
+
+                    <ng-container
+                        *ngIf="
+                            item.type === 'aside' ||
+                            item.type === 'collapsable' ||
+                            item.type === 'group'
+                        "
+                    >
+                        <fuse-horizontal-navigation-branch-item
+                            class="flex"
+                            [item]="item"
+                            [name]="name"
+                        ></fuse-horizontal-navigation-branch-item>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </div> -->
+<div
+    class="fuse-horizontal-navigation-wrapper w-screen flex gap-4 justify-around border-b p-4"
+>
+    <img alt="Logo" class="w-8" />
+    <div class="flex justify-center items-center">
+        <ng-container *ngFor="let item of navigation; trackBy: trackByFn">
+            <ng-container
+                *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden"
+            >
+                <ng-container *ngIf="item.type === 'basic'">
+                    <fuse-horizontal-navigation-basic-item
+                        class="px-4 py-2 hover:bg-blue-700 rounded cursor-pointer hover:text-white"
+                        [item]="item"
+                        [name]="name"
+                    ></fuse-horizontal-navigation-basic-item>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div class="flex justify-center items-center">
+        <ng-container *ngFor="let item of reportar; trackBy: trackByFn">
+            <ng-container
+                *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden"
+            >
+                <ng-container *ngIf="item.type === 'basic'">
+                    <fuse-horizontal-navigation-basic-item
+                        class="px-4 py-2 hover:bg-blue-700 rounded cursor-pointer hover:text-white"
+                        [item]="item"
+                        [name]="name"
+                    ></fuse-horizontal-navigation-basic-item>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div class="flex justify-center items-center">
+        <div class="flex justify-center items-center gap-4">
+            <!-- Ingresar -->
+            <ng-container *ngFor="let item of navigation2; trackBy: trackByFn">
+                <ng-container *ngIf="item.id === 'ingresar'">
+                    <fuse-horizontal-navigation-basic-item
+                        class="px-4 py-2 font-bold text-[#9A61F0] border-2 border-[#9A61F0] cursor-pointer rounded-lg"
+                        [item]="item"
+                        [name]="name"
+                    ></fuse-horizontal-navigation-basic-item>
+                </ng-container>
+            </ng-container>
+
+            <!-- Registrarse -->
+            <ng-container *ngFor="let item of navigation2; trackBy: trackByFn">
+                <ng-container *ngIf="item.id === 'Registrarse'">
+                    <fuse-horizontal-navigation-basic-item
+                        class="px-4 py-2 font-bold bg-[#4A23F4] border-2 border-[#4A23F4] cursor-pointer rounded-lg text-white uppercase"
+                        [item]="item"
+                        [name]="name"
+                    ></fuse-horizontal-navigation-basic-item>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

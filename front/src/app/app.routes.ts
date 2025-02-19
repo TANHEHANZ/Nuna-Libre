@@ -1,12 +1,16 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './layouts/landing/home/home.component';
+import { LandingComponent } from './layouts/landing/landing.component';
+import { CentroAyudaComponent } from './layouts/landing/centro-ayuda/centro.component';
 
 export const appRoutes: Routes = [
     {
         path: '',
-        loadChildren: () =>
-            import('./layouts/landing/landing.module').then(
-                (m) => m.LandingModule
-            ),
+        component: LandingComponent,
+        children: [
+            { path: '', component: HomeComponent },
+            { path: 'centro-ayuda', component: CentroAyudaComponent },
+        ],
     },
     {
         path: 'dashboard',
