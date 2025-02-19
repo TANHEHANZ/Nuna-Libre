@@ -1,5 +1,12 @@
-<section class="grid grid-cols-4 p-8">
-    <app-desaparecido-card
-        [informacion]="datosDesaparecido"
-    ></app-desaparecido-card>
-</section>
+<main class="">
+    <section class="grid grid-cols-3 p-8 gap-2">
+        <ng-container *ngFor="let i of [].constructor(8); let index = index">
+            <app-desaparecido-card
+                [informacion]="datosDesaparecido"
+            ></app-desaparecido-card>
+        </ng-container>
+    </section>
+    <funcionamiento />
+    <app-seccion></app-seccion>
+    <app-donacion></app-donacion>
+</main>

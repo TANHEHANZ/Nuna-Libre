@@ -27,6 +27,9 @@ import {
     DesaparecidoCardComponent,
     DesaparecidoInfo,
 } from './components/card.component';
+import { funcionamientoComponent } from './components/funcionamiento.component';
+import { SeccionComponent } from './components/empezar.component';
+import { DonacionComponent } from './components/donar.component';
 
 @Component({
     selector: 'app-home',
@@ -50,6 +53,9 @@ import {
         RouterOutlet,
         QuickChatComponent,
         DesaparecidoCardComponent,
+        funcionamientoComponent,
+        SeccionComponent,
+        DonacionComponent,
     ],
 
     templateUrl: './home.component.html',

@@ -19,7 +19,7 @@ export interface DesaparecidoInfo {
     standalone: true,
     template: `
         <div
-            class="w-full flex flex-col gap-2 border p-2 border-gray-400 rounded-lg justify-center items-center"
+            class="w-full flex flex-col gap-2 border  border-gray-400 rounded-lg justify-center items-center p-4"
         >
             <article class="flex gap-2">
                 <img
